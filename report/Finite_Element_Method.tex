@@ -49,7 +49,7 @@ Maestría en Física\\
 
 \normalsize
 \section{Introducción al Método de Elementos Finitos}
-Este método para aproximar las soluciones de ecuaciones diferenciales parciales fue originalmente desarrollado para su uso en problemas de ingeniería civil pero en la actualidad su uso es ubicuo para aproximar soluciones en todas las áreas de la matemática aplicada y en muchas aplicaciones de la física. Su uso es intensivo en el modelado de sistemas complejos para el diseño aerodinámico de piezas y dispositivos de exploración espacial. \\ 
+Este método para aproximar las soluciones de ecuaciones diferenciales parciales fue originalmente desarrollado para su uso en problemas de ingeniería civil pero en la actualidad su uso es ubicuo para aproximar soluciones en todas las áreas de la matemática aplicada y en muchas aplicaciones de la física. Su uso es intensivo en el modelado de sistemas complejos para el diseño aerodinámico de piezas y dispositivos de exploración espacial así como también en aplicaciones avanzadas de la ingeniería como las competiciones automovilísticas en el caso de la Formula 1. \\ 
 
 Una de las ventajas del método de elementos finitos sobre el método de diferencias finitas es la relativa facilidad con la que el método de elementos finitos maneja las condiciones de frontera. Muchos problemas físicos(pragmáticos) tienen condiciones de frontera que involucran derivadas y contornos de formas irregulares, sin simetrías aparentes. Condiciones de frontera de este tipo son difíciles de manejar con los métodos de diferencias finitas ya que cada condición de frontera que involucra a alguna derivada tiene que aproximarse con un cociente de diferencias en los puntos del retículo o malla, pero el hecho que se tienen bordes irregulares hace que la definición de un retículo adecuado sea poco trivial. El método de diferencias finitas por el otro lado incluye a las condiciones de frontera como integrales en un funcional que debe minimizarse, de esta manera la construcción del procedimiento del método de elementos finitos es independiente de las condiciones particulares de frontera del problema.\\
 
@@ -107,7 +107,7 @@ donde $\phi_1,\phi_2,\hdots,\phi_m$ son polinomios lineales por partes linealmen
 \phi(x,y)=g(x,y)
 \end{equation}
 se satisfaga en $\mathcal{S}_1$, las constantes restantes $\gamma_1,\gamma_2,\hdots,\gamma_n$, se utilizan para minimizar el funcional $I[\sum_{i=1}^m \gamma_i \phi_i]$. Usando la forma de \ref{eq::phi} para la aproximación de $w$ en la expresión \ref{eq::functional} se obtiene
-\begin{equation}
+\begin{equation}\label{eq::aproximated_functional}
 \begin{aligned}
 I[\phi]&=I\Big[ \sum_{i=1}^{m} \gamma_i \phi_i \Big]\\
 &=\int\int_{\mathcal{D}}\Bigg(\frac{1}{2}\Bigg\{ p(x,y)\Big[ \sum_{i=1}^{m}\gamma_i \frac{\partial \phi_i}{\partial x}(x,y)\Big]^2 + q(x,y)\Big[ \sum_{i=1}^{m}\gamma_i \frac{\partial \phi_i}{\partial y}(x,y)\Big]^2\\
@@ -117,8 +117,47 @@ I[\phi]&=I\Big[ \sum_{i=1}^{m} \gamma_i \phi_i \Big]\\
 \end{equation}
 Como se menciono anteriormente se utiliza $\gamma_i, \gamma_2,\hdots, \gamma_n$ para minimizar el funcional, con esto al considerar a $I$ como una función de $\gamma_i, \gamma_2,\hdots, \gamma_n$, i.e. $I[\gamma_i, \gamma_2,\hdots, \gamma_n]$. Para que obtener un mínimo se tiene que cumplir
 \begin{equation}\label{eq::minimun_condition}
-\frac{d I}{d \gamma_j}=0,\,\, \forall\, j=1,2,\hdots,n
+\frac{d I}{d \gamma_j}=0,\,\, \forall\, j=1,2,\hdots,n.
 \end{equation}
+
+Diferenciando \ref{eq::aproximated_functional} con respecto $\gamma_i$ se obtiene
+\begin{equation}
+\begin{aligned}
+\frac{\partial I}{\partial \gamma_i}=&\int \int_{\mathcal{D}}\Bigg\{p(x,y)\sum_{i=1}^m \gamma_i\frac{\partial \phi_i}{\partial x}(x,y)\frac{\partial \phi_j}{\partial x}(x,y)\\
+& + q(x,y)\sum_{i=1}^{m}\gamma_i\frac{\partial \phi_i}{\partial y}(x,y)\frac{\partial \phi_j}{\partial y}(x,y)\\
+& - r(x,y)\sum_{i=1}^{m}\gamma_i \phi_i(x,y)\phi_j(x,y)+f(x,y)\phi_j(x,y)\Bigg\}dx\,dy\\
+& + \int_{\mathcal{S}_2}\Bigg\{-g_2(x,y)\phi_j(x,y)+g_1(x,y)\sum_{i=1}^m \gamma_i \phi_i(x,y)\phi_j(x,y)\Bigg\}dS,
+\end{aligned}
+\end{equation}
+con esto la condición para minimizar el funcional se convierte en 
+\begin{equation}
+\begin{aligned}
+0&=\sum_{i=1}^m \Bigg[\int \int_{\mathcal{D}}\Bigg\{ p(x,y) \gamma_i\frac{\partial \phi_i}{\partial x}(x,y)\frac{\partial \phi_j}{\partial x}(x,y)+ q(x,y) \gamma_i\frac{\partial \phi_i}{\partial y}(x,y)\frac{\partial \phi_j}{\partial y}(x,y)\\
+&-r(x,y)\phi_i(x,y)\phi_j(x,y)\Bigg\}dx\,dy\\
+&+ \int_{\mathcal{S}_2}g_1(x,y)\phi_i(x,y)\phi_j(x,y)dS\Bigg]\gamma_i\\
+&+ \int\int_{\mathcal{D}} f(x,y)\phi_j(x,y)dx\,dy-\int_{\mathcal{S}_2} g_2(x,y)\phi_j(x,y)dS.
+\end{aligned}
+\end{equation}
+para cada $i=1,2,\hdots,n$. Este conjunto de ecuaciones puede expresarse con una ecuación matricial
+\begin{equation}
+\mathbf{A}\vec{c}=\vec{b},
+\end{equation}
+donde $\vec{c}=(\gamma_1,\hdots,\gamma_n)^t$. Con $\mathbf{A}=(\alpha_{ij})$ y $\vec{b}=(\beta_1,\hdots,\beta_n)^t$ son definidos a continuación
+\begin{equation}\label{eq::alpha_ij}
+\begin{aligned}
+\alpha_{ij}=\int\int_{\mathcal{D}}\Bigg[ p(x,y)\frac{\partial \phi_i}{\partial x}(x,y)\frac{\partial \phi_j}{\partial x}(x,y)+ q(x,y)\frac{\partial \phi_i}{\partial y}(x,y)\frac{\partial \phi_j}{\partial y}(x,y)\\
+-r(x,y)\phi_i(x,y)\phi_j(x,y)\Bigg] dx\,dy+\int_{\mathcal{S}_2} g_1(x,y)\phi_i(x,y)\phi_j(x,y)dS,
+\end{aligned}
+\end{equation}
+para cada $i=1,2,\hdots,n$ y $j=1,2,\hdots,m$, y
+\begin{equation}\label{eq::beta_i}
+\beta_i=-\int\int_{\mathcal{D}}f(x,y)\phi_i(x,y) dx\,dy+\int_{\mathcal{S}} g_2(x,y)\phi_i(x,y)dS-\sum_{k=n+1}^m\alpha_{ik}\gamma_k.
+\end{equation}
+para cada $i=1,\hdots,n$.\\
+
+La elección del conjunto de funciones base es de bastante importancia ya que la elección apropiada puede frecuentemente hacer que la matriz $\mathbf{A}$ sea positiva definida y tenga la forma de una matriz banda(\textit{banded matrix}). Para el problema de segundo orden \ref{eq::partial_diff_equation}, se asume que $\mathcal{D}$ es poligonal, de tal manera que $\mathcal{D}=D$, y que $\mathcal{S}$ es un conjunto de lineas rectas contiguas.
+
+\subsection{Triangulando la región}
 
 
 \begin{thebibliography}{99}
