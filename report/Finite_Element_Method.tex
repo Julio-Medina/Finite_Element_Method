@@ -158,8 +158,39 @@ para cada $i=1,\hdots,n$.\\
 La elección del conjunto de funciones base es de bastante importancia ya que la elección apropiada puede frecuentemente hacer que la matriz $\mathbf{A}$ sea positiva definida y tenga la forma de una matriz banda(\textit{banded matrix}). Para el problema de segundo orden \ref{eq::partial_diff_equation}, se asume que $\mathcal{D}$ es poligonal, de tal manera que $\mathcal{D}=D$, y que $\mathcal{S}$ es un conjunto de lineas rectas contiguas.
 
 \subsection{Triangulando la región}
+Para empezar el procedimiento delineado anteriormente es crucial el paso de subdividir la región $D$ en un conjunto de triángulos  $T_1,T_2,\hdots,T_M$ donde el triángulo $i$(i-esimo) tiene tres vértices o nodos que se denotan 
+\begin{equation}\label{eq::triangle_vertex}
+V_j^{(i)}=\big( x_j^{(i)},y_j^{(i)} \big),\,\,\, \text{para }\, j=1,2,3.
+\end{equation}
+Para simplificar la notación se escribe $V^{(i)}_j=\big(x_j^{(i)},y_j^{(i)})$ cuando se trabaja con el triángulo fijo $T_i$. En cada vértice $V_j$ hay un polinomio lineal asociado
+\begin{equation}
+N_j^{(i)}(x,y)\equiv N_j(x,y)=a_j+b_jx+c_jy,\,\,\,\text{donde }\, N_j^{(i)}(x_k,y_k)=
+\begin{cases}
+1, \,\,j=k\\
+0, \,\,j\neq k
+\end{cases}
+\end{equation}
+Este esquema produce un sistema linear de la forma
+\begin{equation}\label{eq::vertex_equation}
+\begin{bmatrix}
+1 & x_1 & y_1\\
+1 & x_2 & y_2\\
+1 & x_3 & y_3^
+\end{bmatrix}
+\begin{bmatrix}
+a_j\\
+b_j\\
+c_j
+\end{bmatrix}=
+\begin{bmatrix}
+0\\
+1\\
+0
+\end{bmatrix}.
+\end{equation}
+En \ref{eq::vertex_equation} $j=2$ por lo que el elemento 1 ocurre en la fila 2, en general el elemento 1 ocurre en la fila $j$.\\
 
-
+Sí se tienen un etiquetado de los nodos $E_1,\hdots,E_n$ que están en $D\cap \mathcal{S}$. Con cada nodo $E_k$ se asocia una función $\phi_k$ que es lineal en cada triángulo , tiene valor 1 en $E_k$, y es $0$ en los otros nodos(por construcción). Esta elección particular hace a $\phi_k$ idéntica a $N_j^{i}$ en el triángulo $T_i$ cuando el nodo $E_k$ es el vértice denotado por $V_j^{(i)}$.
 \begin{thebibliography}{99}
 %% La bibliografía se ordena en orden alfabético respecto al apellido del 
 %% autor o autor principal
