@@ -48,6 +48,9 @@ Maestría en Física\\
 \hspace{10pt}
 
 \normalsize
+\begin{abstract}
+En este reporte se hace una introducción teórica al Método de Elementos Finitos para resolver ecuaciones diferenciales parciales con condiciones en la frontera. También se incluye una implementación relativamente rápida para resolver ecuaciones diferenciales parabólicas, hiperbólicas y elípticas. Se discuten algunos detalles de como funciona el proceso de teselación. 
+\end{abstract}
 \section{Introducción al Método de Elementos Finitos}
 Este método para aproximar las soluciones de ecuaciones diferenciales parciales fue originalmente desarrollado para su uso en problemas de ingeniería civil pero en la actualidad su uso es ubicuo para aproximar soluciones en todas las áreas de la matemática aplicada y en muchas aplicaciones de la física. Su uso es intensivo en el modelado de sistemas complejos para el diseño aerodinámico de piezas y dispositivos de exploración espacial así como también en aplicaciones avanzadas de la ingeniería como las competiciones automovilísticas en el caso de la Formula 1. \\ 
 
@@ -175,7 +178,7 @@ Este esquema produce un sistema linear de la forma
 \begin{bmatrix}
 1 & x_1 & y_1\\
 1 & x_2 & y_2\\
-1 & x_3 & y_3^
+1 & x_3 & y_3
 \end{bmatrix}
 \begin{bmatrix}
 a_j\\
@@ -191,6 +194,126 @@ c_j
 En \ref{eq::vertex_equation} $j=2$ por lo que el elemento 1 ocurre en la fila 2, en general el elemento 1 ocurre en la fila $j$.\\
 
 Sí se tienen un etiquetado de los nodos $E_1,\hdots,E_n$ que están en $D\cap \mathcal{S}$. Con cada nodo $E_k$ se asocia una función $\phi_k$ que es lineal en cada triángulo , tiene valor 1 en $E_k$, y es $0$ en los otros nodos(por construcción). Esta elección particular hace a $\phi_k$ idéntica a $N_j^{i}$ en el triángulo $T_i$ cuando el nodo $E_k$ es el vértice denotado por $V_j^{(i)}$.
+\section{Análisis de implementaciones}
+En está sección se hace un análisis de las implementaciones del método de diferencias finitas utilizando \textbf{Wolfram Mathematica 12} y \textbf{Python}, específicamente se utiliza la librería \textbf{FEniCS}(ver \cite{FEniCS}). Para hacer las comparaciones se han elegido tres ecuaciones diferenciales parciales:
+\begin{itemize}
+\item Ecuación Elíptica
+\item Ecuación Hiperbólica
+\item Ecuación Parabólica
+
+\end{itemize}
+\subsection{Ecuación Elíptica}
+La ecuación diferencial parcial elíptica a resolver es la siguiente
+\begin{equation}\label{eq::elliptic_pde}
+\begin{aligned}
+\nabla^2 u(x,y)&=x e^y\\
+\frac{\partial ^2 u}{\partial x^2}+\frac{\partial ^2 u}{\partial y^2}&=x e^y, \,\,\, 0<x<2,\,\,0<y<1
+\end{aligned}
+\end{equation}
+La ecuación elíptica es la famosa ecuación de Poisson, en este caso se está considerando un problema bidimensional.\\
+\subsubsection{Implementación en Mathematica}
+Al resolver está ecuación \ref{eq::elliptic_pde} con el paquete \texttt{Needs["NDSolve`FEM`"]} de \texttt{Wolfram Mathematica 12} se obtiene la siguiente solución numérica que se puede visualizar como una superficie embedida en el espacio tridimensional.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.42]{./elliptic.png} 
+\end{center} 
+\caption{Visualización solución numérica de la EDP Elíptica}
+\label{fig::fig2}
+\end{figure}
+Para hacer uso de las funcionalidades del paquete de método de elementos finitos incluido en \texttt{Mathematica} se puede definir una región para resolver a la ecuación elíptica mucho más interesante, digamos que queremos resolver la ecuación en la región rectangular definida anteriormente pero se quiere excluir los puntos del cuadrante de área del circulo definido por la desigualdad
+\begin{equation}\label{eq::region1}
+(x-0.2)^2+(y-0.2)^2\leq 0.3^2
+\end{equation}
+se obtiene la siguiente región en el plano
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.42]{./elliptic_omega.png} 
+\end{center} 
+\caption{Región que excluye los punto en la expresión \ref{eq::region1}}
+\label{fig::fig3}
+\end{figure}
+Además de hacer la región más compleja se quieren imponer condiciones de Dirichlet de la forma
+\begin{equation}
+u(x,y)=
+\begin{cases}
+0, \,\,\, x=2,\,\,\,\,0.8\leq y \leq 1.0\\
+10, \,\,\, (x-0.2)^2+(y-0.2)^2\leq 0.3^2
+\end{cases}
+\end{equation}
+al resolver se obtiene las siguientes curvas de nivel
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.42]{./elliptic_omega_contour.png} 
+\end{center} 
+\caption{Curvas de nivel}
+\label{fig::fig3}
+\end{figure}
+y la solucion correspondiente en el espacio tridimensional se puede visualizar a continuación
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=0.42]{./elliptic_omega_3D.png} 
+\end{center} 
+\caption{Solución numérica con condiciones de Dirichlet}
+\label{fig::fig3}
+\end{figure}
+Se puede observar en este caso particular la teselación de la región de interés generada por el paquete anteriormente mencionado
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.42]{./elliptic_omega_mesh.png} 
+\end{center} 
+\caption{Teselación de la región de interés}
+\label{fig::fig4}
+\end{figure}
+
+\subsection{Ecuación Parabólica}
+Para la ecuación parabólica se tiene el siguiente problema
+\begin{equation}
+\frac{\partial u}{\partial t}(x,t)-\frac{\partial^2 u}{\partial x^2}(x,t)=0,\,\,\,\,0<x<1,\,\,\,t\geq 0
+\end{equation}
+con condiciones de frontera
+\begin{equation}
+u(0,t)=u(1,t)=0,\,\,\,t>0
+\end{equation}
+y condiciones iniciales
+\begin{equation}
+u(x,0)=\sin(\pi x),\,\,\, 0 \leq x \leq 1
+\end{equation}
+\subsubsection{Implementación en Mathematica}
+De nuevo utilizando el paquete \texttt{Needs["NDSolve`FEM`"]} y la función \texttt{NDSolveValue} se puede especificar de una manera sencilla el problema con sus condiciones de frontera e iniciales, el resultado se puede visualizar de mejor manera como una gráfica de la aproximación numérica 
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.42]{./parabolic.png} 
+\end{center} 
+\caption{Aproximación numérica de la EDP parabólica}
+\label{fig::fig5}
+\end{figure}
+Adicionalmente es útil visualizar las curvas de nivel de la solución numérica aproximada
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.29]{./parabolic_contour.png} 
+\end{center} 
+\caption{Curvas de nivel de la aproximación numérica de la EDP parabólica}
+\label{fig::fig5}
+\end{figure}
+
+
+
+\subsection{Ecuación Hiperbólica}
+El problema a resolver para la ecuación hiperbólica es 
+\begin{equation}
+\frac{\partial^2 u}{\partial t^2}(x,y)-4\frac{\partial ^2}{\partial x^2}(x,t)=0,\,\,\,0<x<1,\,\,\,t>0
+\end{equation}
+con condiciones de frontera 
+\begin{equation}
+u(0,t)=u(1,t)=0,\,\,\, \text{para, }\,\,t>0
+\end{equation}
+y condiciones iniciales
+\begin{equation}
+u(x,0)=\sin(\pi x), \,\,\, \text{y}\,\,\,\frac{\partial u}{\partial t}(x,0)=0,\,\,\, 0\leq x \leq 1
+\end{equation}
+
+
+
 \begin{thebibliography}{99}
 %% La bibliografía se ordena en orden alfabético respecto al apellido del 
 %% autor o autor principal
@@ -200,10 +323,10 @@ Sí se tienen un etiquetado de los nodos $E_1,\hdots,E_n$ que están en $D\cap \
 
 \bibitem{Burden} Richard L. Burden, J. Douglas Faires \textit{Numerical Analysis}, (Ninth Edition). Brooks/Cole, Cengage Learning. 978-0-538-73351-9
 
-\bibitem{Medina} Julio Medina. \textit{Método de Diferencias Finitas para ecuaciones elípticas}. \url{https://github.com/Julio-Medina/Finite_Difference_Method}
+\bibitem{sfepy} Cimrman, R., Lukeš, V., Rohan, E., 2019. Multiscale finite element calculations in Python using SfePy. Advances in Computational Mathematics 45, 1897-1921. https://doi.org/10.1007/s10444-019-09666-0
 
-\bibitem{Varga} Richard S. Varga. \textit{Matrix Iterative Analysis}. Second Edition. Springer. DOI 10.1007/978-3-642-05156-2
-
+\bibitem{FEniCS}M. S. Alnaes, J. Blechta, J. Hake, A. Johansson, B. Kehlet, A. Logg, C. Richardson, J. Ring, M. E. Rognes and G. N. Wells. The FEniCS Project Version 1.5, Archive of Numerical Software 3 (2015). [doi.org/10.11588/ans.2015.100.20553]
+\bibitem{}A. Logg, K.-A. Mardal, G. N. Wells et al. Automated Solution of Differential Equations by the Finite Element Method, , Springer(2012). [doi.org/10.1007/978-3-642-23099-8]
 %\bibitem{Feynman} 
 %\bibitem{Hopfield} J.J. Hopfield. \textit{Neural Networks and physical systems with emergent collective computational abilities}. \url{https://doi.org/10.1073/pnas.79.8.2554}
 
