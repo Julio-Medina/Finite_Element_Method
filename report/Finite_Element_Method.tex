@@ -51,6 +51,9 @@ Maestría en Física\\
 \begin{abstract}
 En este reporte se hace una introducción teórica al Método de Elementos Finitos para resolver ecuaciones diferenciales parciales con condiciones en la frontera. También se incluye una implementación relativamente rápida para resolver ecuaciones diferenciales parabólicas, hiperbólicas y elípticas. Se discuten algunos detalles de como funciona el proceso de teselación. 
 \end{abstract}
+\section{Generalidades del Método de Elementos Finitos}
+Hay varios acercamientos teóricos para abordar el método de elementos finitos el la introducción que se da en este documento se utiliza el acercamiento variacional, donde el objetivo es minimizar un funcional que se construye a partir del problema especifico a resolver, este el método presentado en \cite{Burden}, análogo al método de Ritz.\\
+También se incluye una breve reseña de cómo abordar el problema por medio de lo que se conoce como formulación débil. Aquí se parte de la ecuación diferencial parcial y se quiere obtener una integral que cumple ciertos requerimientos para una función de prueba, este formalismo es necesario para resolver problemas utilizando la librería de \texttt{Python}, \texttt{FEniCS}.
 \section{Introducción al Método de Elementos Finitos}
 Este método para aproximar las soluciones de ecuaciones diferenciales parciales fue originalmente desarrollado para su uso en problemas de ingeniería civil pero en la actualidad su uso es ubicuo para aproximar soluciones en todas las áreas de la matemática aplicada y en muchas aplicaciones de la física. Su uso es intensivo en el modelado de sistemas complejos para el diseño aerodinámico de piezas y dispositivos de exploración espacial así como también en aplicaciones avanzadas de la ingeniería como las competiciones automovilísticas en el caso de la Formula 1. \\ 
 
@@ -194,6 +197,74 @@ c_j
 En \ref{eq::vertex_equation} $j=2$ por lo que el elemento 1 ocurre en la fila 2, en general el elemento 1 ocurre en la fila $j$.\\
 
 Sí se tienen un etiquetado de los nodos $E_1,\hdots,E_n$ que están en $D\cap \mathcal{S}$. Con cada nodo $E_k$ se asocia una función $\phi_k$ que es lineal en cada triángulo , tiene valor 1 en $E_k$, y es $0$ en los otros nodos(por construcción). Esta elección particular hace a $\phi_k$ idéntica a $N_j^{i}$ en el triángulo $T_i$ cuando el nodo $E_k$ es el vértice denotado por $V_j^{(i)}$.
+
+\section{Formulación débil para FEM}
+Para empezar la discusión de la formulación débil se inicia planteando el problema original también conocido como formulación fuerte, en este caso se considera a la ecuación diferencial parcial elíptica es decir la ecuación de Poisson
+\begin{equation}\label{eq::strong_form}
+\nabla^2 T= f(x)
+\end{equation}
+Con condición de Dirichlet 
+\begin{equation}
+T=u(x), \,\,\,\,x\in \Gamma_D
+\end{equation}
+y condición de Von Neumman
+\begin{equation}
+\nabla T \cdot \mathbf{n}=g(x),\,\,\,x\in \Gamma_N
+\end{equation}
+donde $\Omega\in \mathbb{R}$ es el dominio de la solución con contorno $d\Omega$, $\Gamma_D$ es la parte del contorno donde se aplica la condición de Dirichlet y $\Gamma_N$ es la parte del contorno con condiciones de Neumann, $T(x)$ es la función desconocida a encontrar o aproximar, $f(x), u(x), g(x)$ son funciones conocidas.\\
+La forma débil de la ecuación \ref{eq::strong_form} se construye al realizar la integral
+\begin{equation}
+\int_{\Omega}(\nabla^2 T -f)\cdot s\, d\Omega=0
+\end{equation}
+donde $s$ es una función de prueba, integrando por partes se obtiene
+\begin{equation}
+\begin{aligned}
+0&=\int_{\Omega}(\nabla^2 T -f)\cdot s\, d\Omega=\int_{\Omega}\nabla\cdot\big( \nabla T \big)\cdot s\, d\Omega-\int_{\Omega}f\cdot s d\Omega=\\
+&=-\int_{\Omega}\nabla T \cdot \nabla s \,d\Omega + \int_{\Omega}\nabla\cdot\big(\nabla T \cdot s  \big)\,d\Omega-\int_{\Omega} f\cdot s\, d\Omega
+\end{aligned}
+\end{equation}
+aplicando la ley de Gauss se obtiene
+\begin{equation}
+\int_{\Omega}\nabla \cdot T \nabla s d\Omega = \int\limits_{\Gamma_D \cup \Gamma_N} s \cdot(\nabla\cdot \mathbf{n})\, d\Gamma-\int_{\Omega}f\cdot s\, d\Omega
+\end{equation}
+la integral de superficie se puede separar en una integral para la parte de la superficie donde aplica la condición de Dirichlet y otra para la parte donde aplica la condición de Neumann
+\begin{equation}\label{eq::intial_weak_form}
+\int_{\Omega}\nabla  T \cdot \nabla s\, d\Omega = \int\limits_{\Gamma_D} s \cdot(\nabla\cdot \mathbf{n})\, d\Gamma+\int\limits_{\Gamma_N} s \cdot(\nabla\cdot \mathbf{n})\, d\Gamma-\int_{\Omega}f\cdot s\, d\Omega
+\end{equation}
+La ecuación \ref{eq::intial_weak_form} es la forma débil inicial de la ecuación de Poisson, pero no se puede aplicar directamente sin considerar primero las condiciones de frontera.
+
+\subsection{Condiciones de contorno de Dirichlet}
+En la parte de la superficie donde se aplican las condiciones de Dirichlet se tienen dos restricciones. Una de ella es la condición de frontera $T(x)=u(x)$ y la segunda es la integral de superficie sobre $\Gamma_D$ en la ecuación \ref{eq::intial_weak_form}. Para evadir el término de la integral de superficie solo se usa la condición en la frontera,  para lograr esto se toma a la función $T \in V(\Omega)$ y la función de prueba $s\in V_0(\Omega)$, donde
+\begin{equation*}
+\begin{aligned}
+V(\Omega)=\{ &v(x)\in H^1(\Omega)\},\\
+V_0(\Omega)=\{v(x) \in& H^1(\Omega);\, v(x)=0,\, x\in\Gamma_D\}.
+\end{aligned}
+\end{equation*}
+Es decir que la función desconocida $T$ debe ser continua conjuntamente con su gradiente en el dominio de interés. Por el otro lado la función de prueba $s$ también debe ser continua al igual que su gradiente pero es cero en la superficie $\Gamma_D$.\\
+Con este requerimiento el término relacionado a la integral de superficie se desvanece y la forma débil de la ecuación de Poisson para $T\in V(\Omega)$ y $s\in V_0(\Omega)$ es
+\begin{equation}
+\begin{aligned}
+\int_{\Omega}\nabla \cdot T \nabla s d\Omega = \int\limits_{\Gamma_N} s \cdot(\nabla\cdot \mathbf{n})\, d\Gamma-\int_{\Omega}f\cdot s\, d\Omega\\
+T(x)=u(x),\,\,\, x\in \Gamma_D.
+\end{aligned}
+\end{equation}
+Por esta razón en la terminología de FEM(o en la amplia literatura sobre el método de elementos finitos) se conoce a las condiciones de Dirichlet como \textit{Condiciones esenciales de contorno}, ya que no están incluidas naturalmente en la formulación débil y tienen que usarse que imponerse tal cual.
+\subsection{Condiciones de contorno de Neumann}
+Las condiciones de contorno de Neumann corresponden al flujo conocido $g(x)=\nabla T \cdot\mathbf{n}$. La integral sobre la superficie de Neumann en la ecuación \ref{eq::intial_weak_form} contiene exactamente el mismo flujo, por lo que en este caso se puede hacer uso directo de la función $g(x)$ en la integral
+\begin{equation}
+\int_{\Omega} \nabla T\cdot \nabla s \, d\Omega= \int_{\Gamma_N}g\cdot s \, d\Gamma-\int_{\Omega}f\cdot s\,d\Omega,
+\end{equation}
+donde la función de prueba $s$ también pertenece al espacio $V_0$.\\
+Por esto en la terminología de FEM se conoce a las condiciones de Neumann como \textit{Condiciones naturales de contorno} ya forman parte de la formulación débil.
+\subsection{Formulación débil para la ecuación de Poisson}
+Con los resultados anteriores se puede hacer la formulación débil de la ecuación de Poisson \ref{eq::strong_form}. Para cualquier función de prueba $s\in V_0(\Omega)$ hallar $T \in V(\Omega)$ tal que 
+\begin{equation}
+\begin{aligned}\label{eq::Poisson_weak_formulation}
+\int_{\Omega} \nabla T\cdot \nabla s \, d\Omega= \int_{\Gamma_N}g\cdot s \, d\Gamma-\int_{\Omega}f\cdot s\,d\Omega,\\
+T(x)=u(x),\,\,\,x\in\Gamma_D.
+\end{aligned}
+\end{equation}
 \section{Análisis de implementaciones}
 En está sección se hace un análisis de las implementaciones del método de diferencias finitas utilizando \textbf{Wolfram Mathematica 12} y \textbf{Python}, específicamente se utiliza la librería \textbf{FEniCS}(ver \cite{FEniCS}). Para hacer las comparaciones se han elegido tres ecuaciones diferenciales parciales:
 \begin{itemize}
@@ -208,6 +279,13 @@ La ecuación diferencial parcial elíptica a resolver es la siguiente
 \begin{aligned}
 \nabla^2 u(x,y)&=x e^y\\
 \frac{\partial ^2 u}{\partial x^2}+\frac{\partial ^2 u}{\partial y^2}&=x e^y, \,\,\, 0<x<2,\,\,0<y<1
+\end{aligned}
+\end{equation}
+con condiciones de contorno
+\begin{equation}
+\begin{aligned}
+u(0,y)=0,\,\,\,u(2,y)=2e^y,\,\,\,0\leq y\leq 1,\\
+u(x,0)=x,\,\,\,u(x,1)=ex,\,\,\,0\leq x\leq 2.
 \end{aligned}
 \end{equation}
 La ecuación elíptica es la famosa ecuación de Poisson, en este caso se está considerando un problema bidimensional.\\
@@ -264,6 +342,17 @@ Se puede observar en este caso particular la teselación de la región de inter�
 \caption{Teselación de la región de interés}
 \label{fig::fig4}
 \end{figure}
+\subsubsection{Implementación en FEniCS}
+Para hacer uso del paquete \texttt{FEniCS} es necesario usar la formulación débil para EDP, como se expuso previamente para la ecuación elíptica o de Poisson se puede usar los términos en la integral \ref{eq::Poisson_weak_formulation} para escribir el código correspondiente.\\
+Usando el problema \ref{eq::elliptic_pde} se obtiene el siguiente resultado para la aproximación de la solución que se puede visualizar en la siguiente figura
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.3]{./elliptic_FEniCS.png} 
+\end{center} 
+\caption{Solución numérica de la ecuación de Poisson}
+\label{fig::fig4.2}
+\end{figure}
+
 
 \subsection{Ecuación Parabólica}
 Para la ecuación parabólica se tiene el siguiente problema
@@ -293,14 +382,14 @@ Adicionalmente es útil visualizar las curvas de nivel de la solución numérica
 \includegraphics[scale=0.29]{./parabolic_contour.png} 
 \end{center} 
 \caption{Curvas de nivel de la aproximación numérica de la EDP parabólica}
-\label{fig::fig5}
+\label{fig::fig6}
 \end{figure}
 
 
 
 \subsection{Ecuación Hiperbólica}
-El problema a resolver para la ecuación hiperbólica es 
-\begin{equation}
+La ecuación hiperbólica también conocida como ecuación de onda. El problema a resolver para la ecuación diferencial parcial hiperbólica es 
+\begin{equation} \label{eq::wave_equation}
 \frac{\partial^2 u}{\partial t^2}(x,y)-4\frac{\partial ^2}{\partial x^2}(x,t)=0,\,\,\,0<x<1,\,\,\,t>0
 \end{equation}
 con condiciones de frontera 
@@ -311,6 +400,25 @@ y condiciones iniciales
 \begin{equation}
 u(x,0)=\sin(\pi x), \,\,\, \text{y}\,\,\,\frac{\partial u}{\partial t}(x,0)=0,\,\,\, 0\leq x \leq 1
 \end{equation}
+\subsubsection{Implementación en Mathematica}
+El resultado de resolver el problema \ref{eq::wave_equation} con las condiciones de frontera e iniciales en Mathematica se puede visualizar en la siguiente figura.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.42]{./wave.png} 
+\end{center} 
+\caption{Solución numérica de la ecuación de onda}
+\label{fig::fig7}
+\end{figure}
+Las curvas de nivel correspondientes se ven en la siguiente figura
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.22]{./wave_contour.png} 
+\end{center} 
+\caption{Curvas de nivel para la solución numérica de la ecuación de onda}
+\label{fig::fig8}
+\end{figure}
+
+
 
 
 
