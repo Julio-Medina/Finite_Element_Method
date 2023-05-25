@@ -298,7 +298,7 @@ Al resolver está ecuación \ref{eq::elliptic_pde} con el paquete \texttt{Needs[
 \caption{Visualización solución numérica de la EDP Elíptica}
 \label{fig::fig2}
 \end{figure}
-Para hacer uso de las funcionalidades del paquete de método de elementos finitos incluido en \texttt{Mathematica} se puede definir una región para resolver a la ecuación elíptica mucho más interesante, digamos que queremos resolver la ecuación en la región rectangular definida anteriormente pero se quiere excluir los puntos del cuadrante de área del circulo definido por la desigualdad
+Para hacer uso de las funcionalidades del paquete de método de elementos finitos incluido en \texttt{Mathematica} se puede definir una región para resolver a la ecuación elíptica mucho más interesante, digamos que queremos resolver la ecuación en la región rectangular definida anteriormente pero se quieren excluir los puntos que están dentro del circulo definidos por la desigualdad
 \begin{equation}\label{eq::region1}
 (x-0.2)^2+(y-0.2)^2\leq 0.3^2
 \end{equation}
@@ -390,7 +390,7 @@ Adicionalmente es útil visualizar las curvas de nivel de la solución numérica
 \subsection{Ecuación Hiperbólica}
 La ecuación hiperbólica también conocida como ecuación de onda. El problema a resolver para la ecuación diferencial parcial hiperbólica es 
 \begin{equation} \label{eq::wave_equation}
-\frac{\partial^2 u}{\partial t^2}(x,y)-4\frac{\partial ^2}{\partial x^2}(x,t)=0,\,\,\,0<x<1,\,\,\,t>0
+\frac{\partial^2 u}{\partial t^2}(x,y)-4\frac{\partial ^2 u}{\partial x^2}(x,t)=0,\,\,\,0<x<1,\,\,\,t>0
 \end{equation}
 con condiciones de frontera 
 \begin{equation}
