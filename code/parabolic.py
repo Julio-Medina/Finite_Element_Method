@@ -62,6 +62,7 @@ for n in range(num_steps):
     # Update previous solution
     u_n.assign(u)
 c=plot(u, title="Solución Ecuación Parabólica")
-plt.colorbar(c)
+#plt.colorbar(c)
+plot(mesh)
 # Show the plot at the end of the simulation
 plt.show()
