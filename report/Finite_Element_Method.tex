@@ -49,11 +49,11 @@ Maestría en Física\\
 
 \normalsize
 \begin{abstract}
-En este reporte se hace una introducción teórica al Método de Elementos Finitos para resolver ecuaciones diferenciales parciales con condiciones en la frontera. También se incluye una implementación relativamente rápida para resolver ecuaciones diferenciales parabólicas, hiperbólicas y elípticas. Se discuten algunos detalles de como funciona el proceso de teselación. 
+En este reporte se hace una introducción teórica al Método de Elementos Finitos para resolver ecuaciones diferenciales parciales con condiciones en la frontera. También se incluyen implementaciones relativamente rápidas para resolver ecuaciones diferenciales parabólicas, hiperbólicas y elípticas. Se discuten algunos detalles de como funciona el proceso de teselación o discretización del dominio y se hace una comparación de los paquetes computacionales de \texttt{Mathematica} y \texttt{Python} para abordar estos problemas.
 \end{abstract}
 \section{Generalidades del Método de Elementos Finitos}
-Hay varios acercamientos teóricos para abordar el método de elementos finitos el la introducción que se da en este documento se utiliza el acercamiento variacional, donde el objetivo es minimizar un funcional que se construye a partir del problema especifico a resolver, este el método presentado en \cite{Burden}, análogo al método de Ritz.\\
-También se incluye una breve reseña de cómo abordar el problema por medio de lo que se conoce como formulación débil. Aquí se parte de la ecuación diferencial parcial y se quiere obtener una integral que cumple ciertos requerimientos para una función de prueba, este formalismo es necesario para resolver problemas utilizando la librería de \texttt{Python}, \texttt{FEniCS}.
+Hay varios acercamientos teóricos para abordar el método de elementos finitos en la introducción que se da en este documento se utiliza el acercamiento funcional, donde el objetivo es minimizar un funcional que se construye a partir del problema especifico a resolver, este el método presentado en \cite{Burden}, análogo al método de Ritz.\\
+También se incluye una breve reseña de cómo abordar el problema por medio de lo que se conoce como formulación débil. Aquí se parte de la ecuación diferencial parcial y se quiere obtener una integral que cumple ciertos requerimientos para una función de prueba, este formalismo es necesario para resolver problemas utilizando la librería de \texttt{Python}, \texttt{FEniCS}. Vale mencionar que estos dos acercamientos se basan en el cálculo de variaciones.
 \section{Introducción al Método de Elementos Finitos}
 Este método para aproximar las soluciones de ecuaciones diferenciales parciales fue originalmente desarrollado para su uso en problemas de ingeniería civil pero en la actualidad su uso es ubicuo para aproximar soluciones en todas las áreas de la matemática aplicada y en muchas aplicaciones de la física. Su uso es intensivo en el modelado de sistemas complejos para el diseño aerodinámico de piezas y dispositivos de exploración espacial así como también en aplicaciones avanzadas de la ingeniería como las competiciones automovilísticas en el caso de la Formula 1. \\ 
 
@@ -92,7 +92,7 @@ I[w]=\int\int_{\mathcal{D}}\Bigg\{ \frac{1}{2}\Big[p(x,y)\Big( \frac{\partial w}
 \end{equation}
 sobre todas las funciones dos veces diferenciables y continuas $w$ que satisfacen la ecuación \ref{eq::boundary1} en $\mathcal{S}_1$. El método de elementos finitos aproxima está solución al minimizar al funcional I \ref{eq::functional} sobre una clase mas pequeña de funciones, similar al acercamiento utilizado el método de Rayleigh-Ritz(ver Burden. \cite{Burden}).
 \subsection{Definiendo los elementos finitos}
-El primer paso es de definir los elementos finitos para construir la aproximación, esto consiste en dividir la región en un número finito de secciones o elementos con una forma regular, pueden ser triángulos, rectángulos, o cualquier figura regular que "tesele"  la región por completo(\textit{tiling the region}).\\
+El primer paso es de definir los elementos finitos para construir la aproximación, esto consiste en dividir la región en un número finito de secciones o elementos con una forma regular, pueden ser triángulos, rectángulos, o cualquier figura regular que "tesele" o discretice la región por completo(\textit{tiling the region}).\\
 
 El conjunto de funciones regularmente usadas para la aproximación es un conjunto de polinomios por partes de grado fijo en $x$ y $y$, y la aproximación requiere que los polinomios sean unidos de tal manera que la función resultante sea continua con primera y segunda derivadas integrables sobre la región entera. polinomios de tipo linear en $x$ y $y$ 
 \begin{equation}
@@ -356,7 +356,7 @@ Usando el problema \ref{eq::elliptic_pde} se obtiene el siguiente resultado para
 
 \subsection{Ecuación Parabólica}
 Para la ecuación parabólica se tiene el siguiente problema
-\begin{equation}
+\begin{equation}\label{eq::parabolic_pde}
 \frac{\partial u}{\partial t}(x,t)-\frac{\partial^2 u}{\partial x^2}(x,t)=0,\,\,\,\,0<x<1,\,\,\,t\geq 0
 \end{equation}
 con condiciones de frontera
@@ -384,6 +384,25 @@ Adicionalmente es útil visualizar las curvas de nivel de la solución numérica
 \caption{Curvas de nivel de la aproximación numérica de la EDP parabólica}
 \label{fig::fig6}
 \end{figure}
+\subsubsection{Implementación en FEniCS}
+De nuevo para poder programar la resolución numérica de la ecuación es necesario formular la versión débil del problema \ref{eq::parabolic_pde}, esto se puede revisar en el código de \texttt{Python} del repositorio de \texttt{GitHub}, ver \cite{Medina}.\\
+El resultado obtenido con FEniCS se presenta en la siguiente figura
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.29]{./parabolic_FEniCS.png} 
+\end{center} 
+\caption{Aproximación para la solución de la EDP parabólica}
+\label{fig::fig6}
+\end{figure}
+Para poder apreciar el tipo de teselación del espacio del dominio de interés creado con \texttt{FEniCS} se usa el retículo resultante sobre la solución anterior
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.49]{./parabolic_FEniCS_mesh.png} 
+\end{center} 
+\caption{Teselación para la solución de la EDP parabólica}
+\label{fig::fig7}
+\end{figure}
+
 
 
 
@@ -417,8 +436,73 @@ Las curvas de nivel correspondientes se ven en la siguiente figura
 \caption{Curvas de nivel para la solución numérica de la ecuación de onda}
 \label{fig::fig8}
 \end{figure}
+\subsection{Implementación en FEniCS}
+Utilizando la formulación débil de \ref{eq::wave_equation} se puede resolver el problema usando \texttt{FEniCS}, el resultado se presenta a continuación
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.32]{./wave_FEniCS.png} 
+\end{center} 
+\caption{Curvas de nivel para la solución numérica de la ecuación de onda}
+\label{fig::fig8}
+\end{figure}
+\section{Comparación de implementaciones}
+Para poder comparar las implementaciones realizadas para las soluciones de las ecuaciones diferenciales parciales cónicas presentadas anteriormente se compara la memoria RAM utilizada en promedio por cada paquete.\\
+\begin{center}
+\begin{tabular}{ |c|c|c|c| } 
+\hline
+Ecuación Diferencial Parcial & \texttt{Wolfram Mathematica}& \texttt{Python/FEniCS}\\
+\hline
+Elíptica& $188$MB & $266$MB \\ 
+Parabólica& $178$MB& $148$MB\\ 
+Hiperbólica& $178$MB & $152$MB\\ 
+\hline
+\end{tabular}
+\end{center}
+\subsection{Discretización del espacio}
+El paso de discretizar el dominio de interés es fundamental en el método de elementos finitos, hay muchos acercamientos teóricos de como lograr este objetivo. Como se discutió anteriormente la elección de la figura geométrica elemental para realizar la teselación tiene repercusiones directas en la construcción del método.\\
 
+Para mencionar algunos de los métodos utilizado por el paquete \texttt{NeedsFEM} de \texttt{Wolfram Mathematica} se tienen los siguientes:
+\begin{enumerate}
+  \item \textbf{Triangulación de Delaunay}: Este es un algoritmo común utilizado en la generación de mallas 2D. Una triangulación de un conjunto de puntos es de Delaunay si ningún punto está dentro del círculo circunscrito de cualquier triángulo. Las triangulaciones de Delaunay maximizan el ángulo mínimo de todos los ángulos de los triángulos, lo que resulta en triángulos 'bien formados'.
+  \item \textbf{Diagrama de Voronoi}: Este es un grafo dual a la triangulación de Delaunay. Dado un conjunto de puntos, para cada punto habrá un polígono donde todas las ubicaciones dentro del polígono están más cerca del punto dado que de cualquier otro. Los polígonos juntos forman un diagrama de Voronoi. Esto se puede usar en estrategias de refinamiento de mallas.
+  \item \textbf{Método Octree (Quadtree en 2D)}: Este es un método común en la generación de mallas 3D. La idea es dividir recursivamente el dominio en ocho (cuatro en 2D) partes iguales hasta que se alcance la granularidad deseada. La transición entre diferentes niveles de granularidad puede ser manejada por elementos de transición especiales.
+  \item \textbf{Método de Frente Avanzado}: Este método implica comenzar desde una malla de frontera y agregar gradualmente elementos al interior. Se mantiene un "frente" entre las áreas ya malladas y las áreas aún por mallas, y se agregan nuevos nodos de manera que este frente avance.
+  \item \textbf{Algoritmo de Ruppert}: Esto es un refinamiento de la triangulación de Delaunay que además tiene en cuenta un criterio sobre el ángulo mínimo, lo que lleva a triangulaciones de alta calidad.
+  
 
+\end{enumerate}
+
+\texttt{FEniCS} también utiliza algunas de las técnicas y marcos teóricos que utilizan en \texttt{Wolfram Mathematica} sin embargo siendo un proyecto \textit{open-source}(código abierto) hay alguna fortalezas que se pueden mencionar de su uso:
+\begin{enumerate}
+  \item \textbf{Generación de mallas}: Para el paso de generación de mallas, \texttt{FEniCS} utiliza bibliotecas como \texttt{mshr} y \texttt{CGAL} para crear y manipular mallas complejas.
+  \item \textbf{Montaje de Elementos Finitos}: La principal fortaleza de \texttt{FEniCS} reside en su montaje automatizado de elementos finitos. \texttt{FEniCS} utiliza el concepto de formas variacionales (la base matemática de la discretización de elementos finitos) que se puede definir en notación casi matemática directamente en un programa de Python o C++.
+  \item \textbf{Resolución de problemas}: \texttt{FEniCS} utiliza la biblioteca \texttt{PETSc} para la solución de sistemas de ecuaciones lineales y no lineales, una herramienta poderosa y escalable para estos cálculos.
+\end{enumerate}
+
+\section{Análisis estadístico en los resultados de una aproximación numérica}
+
+El análisis estadístico se puede realizar en los resultados de una aproximación numérica para comprender mejor las características y el rendimiento del método de aproximación, validar los resultados e inferir sobre el proceso que generó los datos. Algunas técnicas estadísticas utilizadas comúnmente :
+
+\begin{enumerate}
+  \item \textbf{Estadísticas descriptivas}: Esto puede incluir la media, mediana, moda, desviación estándar, varianza, rango, mínimo, máximo, cuartiles y otras medidas que describen las características básicas de los datos. Esto puede dar una idea de la tendencia central, la dispersión y la distribución de los datos.
+  \item \textbf{Análisis de error}: Puede calcular los residuos (la diferencia entre los valores observados y predichos) y analizar su distribución. Podría calcular el error absoluto medio, el error cuadrado medio u otras métricas de error. Podría ser útil trazar residuos para inspeccionar visualmente los patrones.
+  \item \textbf{Intervalos de confianza}: Podría construir intervalos de confianza alrededor de sus parámetros estimados o predicciones para cuantificar la incertidumbre.
+  \item \textbf{Pruebas de hipótesis}: Si tiene una hipótesis específica sobre sus resultados, como si un método de aproximación es superior a otro, podría realizar una prueba de hipótesis. Por ejemplo, se podría utilizar una prueba t para comparar las medias de dos grupos.
+  \item \textbf{Análisis de correlación}: Si tiene varias variables en sus resultados, podría examinar las relaciones entre ellas utilizando coeficientes de correlación o diagramas de dispersión.
+  \item \textbf{Análisis de regresión}: Si sus resultados se basan en múltiples variables de entrada, puede usar el análisis de regresión para entender cómo estas variables influyen colectivamente en el resultado. Esto también puede ayudarle a predecir resultados futuros.
+  \item \textbf{Análisis de varianza (ANOVA)}: Si está comparando los resultados de diferentes métodos de aproximación o diferentes ajustes del mismo método, ANOVA se puede utilizar para determinar si las diferencias entre los grupos son estadísticamente significativas.
+  \item \textbf{Bootstrap o validación cruzada}: Estas técnicas se pueden usar para estimar la precisión de su método de aproximación al remuestrear los datos o dividirlos en subconjuntos.
+  \item \textbf{Análisis de Monte Carlo}: Si su aproximación numérica involucra aleatoriedad (como en la integración de Monte Carlo), entonces puede analizar la distribución de los resultados de múltiples ejecuciones para entender la media, la varianza y otras propiedades estadísticas.
+\end{enumerate}
+
+\section{Conclusiones}
+
+El método de elementos finitos se ha convertido en una herramienta fundamental en el modelado matemático, en las simulaciones físicas y en análisis de ingeniería. Es bien conocida la dificultad para abordar problemas de ecuaciones diferenciales parciales con condiciones en la frontera(Dirichlet o Neumann) y encontrar soluciones analíticas a estos, una ejemplo iconico en la física a nivel de postgrado se puede dar con el estudio de problemas de la teoría electromagnética encontrados en Jackson \cite{Jackson}.\\
+
+El uso de paquetes computacionales para abordar estos problemas es ubicuo en toda la ciencia, ya que la mayoría de problemas no se pueden resolver de manera analítica por lo que es obligatorio utilizar algún acercamiento numérico. Las ventajas expuestas en el manejo de las condiciones de frontera hacen que el método de elementos finitos sea una de las opciones más utilizadas en la práctica.\\
+
+De los resultados obtenidos al resolver las ecuaciones cónicas se pueden establecer que \texttt{Wolfram Mathematica} y \texttt{FEniCS} tienen una implementación de FEM muy robusta y relativamente fácil de utilizar, cada uno tiene sus ventajas y desventajas. \texttt{Wolfram Mathematica} hace que la formulación del problema se pueda hacer casi de manera natural es decir que la sintaxis para definir al problema es muy similar a lo que se escribiría en una hoja de papel o en LaTeX, se escribe la EDP directamente. Para contrastar esto en \texttt{FEniCS} hay que elaborar un poco más y definir la formulación débil del problema. Uno es un software propietario y el otro de código abierto esto hace de \texttt{FEniCS} una opción más accesible y configurable a costo de un conocimiento más detallado de la programación. Las diferencias en el consumo de RAM especificamente para estos problemas no es significativa, sin embargo vale mencionar que tanto \texttt{Python} como \texttt{Mathematica} son bien conocidos por tener un consumo elevado de memoria RAM.\\
+En cuanto a la rapidez de la soluciones el gran ganador es \texttt{Mathematica} ya resuelve los problemas casi instantáneamente mientras que en \texttt{Python} la solución puede tardar hasta un par de minutos dependiendo los parámetros utilizados. En este caso sería interesante usar \texttt{C++} para hacer una comparación de tiempos más razonable.
 
 
 
@@ -431,10 +515,14 @@ Las curvas de nivel correspondientes se ven en la siguiente figura
 
 \bibitem{Burden} Richard L. Burden, J. Douglas Faires \textit{Numerical Analysis}, (Ninth Edition). Brooks/Cole, Cengage Learning. 978-0-538-73351-9
 
-\bibitem{sfepy} Cimrman, R., Lukeš, V., Rohan, E., 2019. Multiscale finite element calculations in Python using SfePy. Advances in Computational Mathematics 45, 1897-1921. https://doi.org/10.1007/s10444-019-09666-0
+\bibitem{sfepy} Cimrman, R., Lukeš, V., Rohan, E., 2019. \textit{Multiscale finite element calculations in Python using SfePy}. Advances in Computational Mathematics 45, 1897-1921. https://doi.org/10.1007/s10444-019-09666-0
 
-\bibitem{FEniCS}M. S. Alnaes, J. Blechta, J. Hake, A. Johansson, B. Kehlet, A. Logg, C. Richardson, J. Ring, M. E. Rognes and G. N. Wells. The FEniCS Project Version 1.5, Archive of Numerical Software 3 (2015). [doi.org/10.11588/ans.2015.100.20553]
-\bibitem{}A. Logg, K.-A. Mardal, G. N. Wells et al. Automated Solution of Differential Equations by the Finite Element Method, , Springer(2012). [doi.org/10.1007/978-3-642-23099-8]
+\bibitem{FEniCS}M. S. Alnaes, J. Blechta, J. Hake, A. Johansson, B. Kehlet, A. Logg, C. Richardson, J. Ring, M. E. Rognes and G. N. Wells.\textit{The FEniCS Project Version 1.5, Archive of Numerical Software 3 (2015)}. [doi.org/10.11588/ans.2015.100.20553]
+\bibitem{}A. Logg, K.-A. Mardal, G. N. Wells. \textit{Automated Solution of Differential Equations by the Finite Element Method}, Springer(2012). [doi.org/10.1007/978-3-642-23099-8]
+
+\bibitem{Medina}Julio Medina. \textit{Método de Elementos Finitos}. \url{https://github.com/Julio-Medina/Finite_Element_Method}
+
+\bibitem{Jackson}  John David Jackson. \textit{Classical Electrodynamics}. Wiley, 1999.
 %\bibitem{Feynman} 
 %\bibitem{Hopfield} J.J. Hopfield. \textit{Neural Networks and physical systems with emergent collective computational abilities}. \url{https://doi.org/10.1073/pnas.79.8.2554}
 

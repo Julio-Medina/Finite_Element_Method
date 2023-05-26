@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.18)  24 MAY 2023 20:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.5.18)  25 MAY 2023 23:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -381,6 +381,15 @@ LaTeX Warning: Label `fig::fig3' multiply defined.
 
 LaTeX Warning: Label `fig::fig3' multiply defined.
 
+
+LaTeX Warning: Label `fig::fig6' multiply defined.
+
+
+LaTeX Warning: Label `fig::fig7' multiply defined.
+
+
+LaTeX Warning: Label `fig::fig8' multiply defined.
+
 )
 \openout1 = `Finite_Element_Method.aux'.
 
@@ -475,7 +484,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--67
 
  []
 
-<./fig1.png, id=83, 702.625pt x 554.07pt>
+<./fig1.png, id=108, 702.625pt x 554.07pt>
 File: ./fig1.png Graphic file (type png)
 <use ./fig1.png>
 Package pdftex.def Info: ./fig1.png  used on input line 79.
@@ -526,7 +535,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 290--292
 
  []
 
-<./elliptic.png, id=166, 865.2325pt x 492.84125pt>
+<./elliptic.png, id=191, 865.2325pt x 492.84125pt>
 File: ./elliptic.png Graphic file (type png)
 <use ./elliptic.png>
 Package pdftex.def Info: ./elliptic.png  used on input line 296.
@@ -537,7 +546,7 @@ Overfull \hbox (18.39517pt too wide) in paragraph at lines 296--297
  []
 
 [8]
-<./elliptic_omega.png, id=176, 831.105pt x 436.63126pt>
+<./elliptic_omega.png, id=201, 831.105pt x 436.63126pt>
 File: ./elliptic_omega.png Graphic file (type png)
 <use ./elliptic_omega.png>
 Package pdftex.def Info: ./elliptic_omega.png  used on input line 308.
@@ -561,7 +570,7 @@ er (name{figure.3}) has been already used, duplicate ignored
 l.314 \begin{equation}
                        <./elliptic.png (PNG copy)> <./elliptic_omega.png (PNG c
 opy)>]
-<./elliptic_omega_contour.png, id=185, 831.105pt x 436.63126pt>
+<./elliptic_omega_contour.png, id=210, 831.105pt x 436.63126pt>
 File: ./elliptic_omega_contour.png Graphic file (type png)
 <use ./elliptic_omega_contour.png>
 Package pdftex.def Info: ./elliptic_omega_contour.png  used on input line 324.
@@ -571,7 +580,7 @@ Overfull \hbox (4.06172pt too wide) in paragraph at lines 324--325
  [] 
  []
 
-<./elliptic_omega_3D.png, id=186, 947.54pt x 443.6575pt>
+<./elliptic_omega_3D.png, id=211, 947.54pt x 443.6575pt>
 File: ./elliptic_omega_3D.png Graphic file (type png)
 <use ./elliptic_omega_3D.png>
 Package pdftex.def Info: ./elliptic_omega_3D.png  used on input line 332.
@@ -581,7 +590,7 @@ Overfull \hbox (52.96408pt too wide) in paragraph at lines 332--333
  [] 
  []
 
-<./elliptic_omega_mesh.png, id=187, 831.105pt x 431.6125pt>
+<./elliptic_omega_mesh.png, id=212, 831.105pt x 431.6125pt>
 File: ./elliptic_omega_mesh.png Graphic file (type png)
 <use ./elliptic_omega_mesh.png>
 Package pdftex.def Info: ./elliptic_omega_mesh.png  used on input line 340.
@@ -606,7 +615,7 @@ gnored
 l.345 \subsubsection
                     {Implementación en FEniCS} <./elliptic_omega_contour.png (
 PNG copy)> <./elliptic_omega_3D.png (PNG copy)>]
-<./elliptic_FEniCS.png, id=197, 1387.584pt x 724.8681pt>
+<./elliptic_FEniCS.png, id=222, 1387.584pt x 724.8681pt>
 File: ./elliptic_FEniCS.png Graphic file (type png)
 <use ./elliptic_FEniCS.png>
 Package pdftex.def Info: ./elliptic_FEniCS.png  used on input line 350.
@@ -630,7 +639,7 @@ l.361 \end{equation}
 l.361 \end{equation}
                      <./elliptic_omega_mesh.png (PNG copy)> <./elliptic_FEniCS.
 png>]
-<./parabolic.png, id=206, 761.84625pt x 414.54875pt>
+<./parabolic.png, id=231, 761.84625pt x 414.54875pt>
 File: ./parabolic.png Graphic file (type png)
 <use ./parabolic.png>
 Package pdftex.def Info: ./parabolic.png  used on input line 374.
@@ -641,7 +650,7 @@ Overfull \hbox (30.33214pt too wide) in paragraph at lines 371--378
 NDSolve`FEM`"] \OT1/cmr/m/n/10 y la fun-ci^^Son \OT1/cmtt/m/n/10 NDSolveValue
  []
 
-<./parabolic_contour.png, id=207, 831.105pt x 826.08624pt>
+<./parabolic_contour.png, id=232, 831.105pt x 826.08624pt>
 File: ./parabolic_contour.png Graphic file (type png)
 <use ./parabolic_contour.png>
 Package pdftex.def Info: ./parabolic_contour.png  used on input line 382.
@@ -651,15 +660,15 @@ Package pdftex.def Info: ./parabolic_contour.png  used on input line 382.
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.387 
-       <./parabolic.png (PNG copy)>]
-<./wave.png, id=217, 1038.88126pt x 405.515pt>
-File: ./wave.png Graphic file (type png)
-<use ./wave.png>
-Package pdftex.def Info: ./wave.png  used on input line 407.
-(pdftex.def)             Requested size: 436.32715pt x 170.31512pt.
+l.387 \subsubsection
+                    {Implementación en FEniCS} <./parabolic.png (PNG copy)>]
+<./parabolic_FEniCS.png, id=243, 1339.8858pt x 706.0779pt>
+File: ./parabolic_FEniCS.png Graphic file (type png)
+<use ./parabolic_FEniCS.png>
+Package pdftex.def Info: ./parabolic_FEniCS.png  used on input line 392.
+(pdftex.def)             Requested size: 388.55693pt x 204.75734pt.
 
-Overfull \hbox (91.32715pt too wide) in paragraph at lines 407--408
+Overfull \hbox (43.55693pt too wide) in paragraph at lines 392--393
  [] 
  []
 
@@ -668,59 +677,146 @@ Overfull \hbox (91.32715pt too wide) in paragraph at lines 407--408
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.412 L
-       as curvas de nivel correspondientes se ven en la siguiente figura <./par
-abolic_contour.png (PNG copy)>]
-<./wave_contour.png, id=227, 371.3875pt x 997.7275pt>
-File: ./wave_contour.png Graphic file (type png)
-<use ./wave_contour.png>
-Package pdftex.def Info: ./wave_contour.png  used on input line 415.
-(pdftex.def)             Requested size: 81.70549pt x 219.50072pt.
+l.397 P
+       ara poder apreciar el tipo de teselación del espacio del dominio de ...
+ <./parabolic_contour.png (PNG copy)>]
+<./parabolic_FEniCS_mesh.png, id=251, 462.528pt x 346.896pt>
+File: ./parabolic_FEniCS_mesh.png Graphic file (type png)
+<use ./parabolic_FEniCS_mesh.png>
+Package pdftex.def Info: ./parabolic_FEniCS_mesh.png  used on input line 400.
+(pdftex.def)             Requested size: 226.64069pt x 169.98051pt.
  [14pdfTeX warning (ext4): destination with the same identifier (name{figure.10
 }) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.436 \bibitem{FEniCS}
-                      M. S. Alnaes, J. Blechta, J. Hake, A. Johansson, B. Ke...
-pdfTeX warning (ext4): destination with the same identifier (name{figure.11}) h
-as been already used, duplicate ignored
+l.417 \end{equation}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{figure.11}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.436 \bibitem{FEniCS}
-                      M. S. Alnaes, J. Blechta, J. Hake, A. Johansson, B. Ke...
- <./wave.png (PNG copy)> <./wave_contour.png (PNG copy)>]
-Underfull \hbox (badness 1173) in paragraph at lines 436--437
-\OT1/cmr/m/n/10 niCS Pro-ject Ver-sion 1.5, Ar-chi-ve of Nu-me-ri-cal Soft-wa-r
-e 3 (2015).
+l.417 \end{equation}
+                     <./parabolic_FEniCS.png> <./parabolic_FEniCS_mesh.png>]
+<./wave.png, id=262, 1038.88126pt x 405.515pt>
+File: ./wave.png Graphic file (type png)
+<use ./wave.png>
+Package pdftex.def Info: ./wave.png  used on input line 426.
+(pdftex.def)             Requested size: 436.32715pt x 170.31512pt.
+
+Overfull \hbox (91.32715pt too wide) in paragraph at lines 426--427
+ [] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 447.
-[15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 447.
+<./wave_contour.png, id=263, 371.3875pt x 997.7275pt>
+File: ./wave_contour.png Graphic file (type png)
+<use ./wave_contour.png>
+Package pdftex.def Info: ./wave_contour.png  used on input line 434.
+(pdftex.def)             Requested size: 81.70549pt x 219.50072pt.
+[15pdfTeX warning (ext4): destination with the same identifier (name{figure.12}
+) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.439 \subsection
+                 {Implementación en FEniCS} <./wave.png (PNG copy)>]
+<./wave_FEniCS.png, id=272, 1339.8858pt x 706.0779pt>
+File: ./wave_FEniCS.png Graphic file (type png)
+<use ./wave_FEniCS.png>
+Package pdftex.def Info: ./wave_FEniCS.png  used on input line 443.
+(pdftex.def)             Requested size: 428.77222pt x 225.94954pt.
+
+Overfull \hbox (83.77222pt too wide) in paragraph at lines 443--444
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 449--450
+
+ []
+
+[16pdfTeX warning (ext4): destination with the same identifier (name{figure.13}
+) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.450 \begin{center}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{figure.14}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.450 \begin{center}
+                     <./wave_contour.png (PNG copy)> <./wave_FEniCS.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 462--463
+
+ []
+
+[17] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 500--501
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 502--503
+
+ []
+
+[19]
+Underfull \hbox (badness 1484) in paragraph at lines 520--521
+\OT1/cmr/m/n/10 C. Ri-chard-son, J. Ring, M. E. Rog-nes and G. N. Wells.\OT1/cm
+r/m/it/10 The FE-
+ []
+
+
+Underfull \hbox (badness 1132) in paragraph at lines 520--521
+\OT1/cmr/m/it/10 niCS Pro-ject Ver-sion 1.5, Ar-chi-ve of Nu-me-ri-cal Soft-wa-
+re 3 (2015)\OT1/cmr/m/n/10 .
+ []
+
+
+Underfull \hbox (badness 1796) in paragraph at lines 521--522
+[]\OT1/cmr/m/n/10 A. Logg, K.-A. Mar-dal, G. N. Wells. \OT1/cmr/m/it/10 Au-to-m
+a-ted So-lu-tion of Dif-
+ []
+
+
+Underfull \hbox (badness 3281) in paragraph at lines 521--522
+\OT1/cmr/m/it/10 fe-ren-tial Equa-tions by the Fi-ni-te Ele-ment Met-hod\OT1/cm
+r/m/n/10 , Sprin-ger(2012).
+ []
+
+
+Underfull \hbox (badness 2359) in paragraph at lines 523--524
+[]\OT1/cmr/m/n/10 Julio Me-di-na. \OT1/cmr/m/it/10 M^^Seto-do de Ele-men-tos Fi
+-ni-tos\OT1/cmr/m/n/10 . []$\OT1/cmtt/m/n/10 https : / / github . com /
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 535.
+[20]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 535.
  (./Finite_Element_Method.aux
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 447.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 447.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 535.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 535.
 Package rerunfilecheck Info: File `Finite_Element_Method.out' has not changed.
-(rerunfilecheck)             Checksum: AEBD6EF93086413CF047F9D8EE0229B4;1313.
+(rerunfilecheck)             Checksum: 83EBD6A4BFC7DEF246EEB7F39A15B2DE;1789.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 447.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 535.
  ) 
 Here is how much of TeX's memory you used:
- 8396 strings out of 481239
- 122731 string characters out of 5920377
- 410108 words of memory out of 5000000
- 23401 multiletter control sequences out of 15000+600000
- 538191 words of font info for 47 fonts, out of 8000000 for 9000
+ 8458 strings out of 481239
+ 123588 string characters out of 5920377
+ 410203 words of memory out of 5000000
+ 23426 multiletter control sequences out of 15000+600000
+ 538358 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,11n,35p,1068b,465s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,11n,35p,1114b,467s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texli
 ve/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-di
@@ -737,12 +833,13 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmtt10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1
-000.pfb>
-Output written on Finite_Element_Method.pdf (15 pages, 1223212 bytes).
+blic/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmtt9.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb
+>
+Output written on Finite_Element_Method.pdf (20 pages, 1417717 bytes).
 PDF statistics:
- 321 PDF objects out of 1000 (max. 8388607)
- 271 compressed objects within 3 object streams
- 86 named destinations out of 1000 (max. 500000)
- 184 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 411 PDF objects out of 1000 (max. 8388607)
+ 348 compressed objects within 4 object streams
+ 119 named destinations out of 1000 (max. 500000)
+ 247 words of extra memory for PDF output out of 10000 (max. 10000000)
 

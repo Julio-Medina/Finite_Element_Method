@@ -12,5 +12,11 @@
 \BOOKMARK [3][-]{subsubsection.4.1.2}{Implementaci\363n en FEniCS}{subsection.4.1}% 12
 \BOOKMARK [2][-]{subsection.4.2}{Ecuaci\363n Parab\363lica}{section.4}% 13
 \BOOKMARK [3][-]{subsubsection.4.2.1}{Implementaci\363n en Mathematica}{subsection.4.2}% 14
-\BOOKMARK [2][-]{subsection.4.3}{Ecuaci\363n Hiperb\363lica}{section.4}% 15
-\BOOKMARK [3][-]{subsubsection.4.3.1}{Implementaci\363n en Mathematica}{subsection.4.3}% 16
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Implementaci\363n en FEniCS}{subsection.4.2}% 15
+\BOOKMARK [2][-]{subsection.4.3}{Ecuaci\363n Hiperb\363lica}{section.4}% 16
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Implementaci\363n en Mathematica}{subsection.4.3}% 17
+\BOOKMARK [2][-]{subsection.4.4}{Implementaci\363n en FEniCS}{section.4}% 18
+\BOOKMARK [1][-]{section.5}{Comparaci\363n de implementaciones}{}% 19
+\BOOKMARK [2][-]{subsection.5.1}{Discretizaci\363n del espacio}{section.5}% 20
+\BOOKMARK [1][-]{section.6}{An\341lisis estad\355stico en los resultados de una aproximaci\363n num\351rica}{}% 21
+\BOOKMARK [1][-]{section.7}{Conclusiones}{}% 22
