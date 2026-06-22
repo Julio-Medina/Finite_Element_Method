@@ -1,0 +1,22 @@
+\BOOKMARK [1][-]{section.1}{Overview of the Finite Element Method}{}% 1
+\BOOKMARK [1][-]{section.2}{Introduction to the Finite Element Method}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Defining the Finite Elements}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Triangulating the Region}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Weak Formulation for FEM}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Dirichlet Boundary Conditions}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Neumann Boundary Conditions}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.3}{Weak Formulation of the Poisson Equation}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{Implementation Analysis}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{Elliptic Equation}{section.4}% 10
+\BOOKMARK [3][-]{subsubsection.4.1.1}{Implementation in Mathematica}{subsection.4.1}% 11
+\BOOKMARK [3][-]{subsubsection.4.1.2}{Implementation in FEniCS}{subsection.4.1}% 12
+\BOOKMARK [2][-]{subsection.4.2}{Parabolic Equation}{section.4}% 13
+\BOOKMARK [3][-]{subsubsection.4.2.1}{Implementation in Mathematica}{subsection.4.2}% 14
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Implementation in FEniCS}{subsection.4.2}% 15
+\BOOKMARK [2][-]{subsection.4.3}{Hyperbolic Equation}{section.4}% 16
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Implementation in Mathematica}{subsection.4.3}% 17
+\BOOKMARK [3][-]{subsubsection.4.3.2}{Implementation in FEniCS}{subsection.4.3}% 18
+\BOOKMARK [1][-]{section.5}{Comparison of the Implementations}{}% 19
+\BOOKMARK [2][-]{subsection.5.1}{Spatial Discretization}{section.5}% 20
+\BOOKMARK [1][-]{section.6}{Statistical Analysis of Numerical Approximation Results}{}% 21
+\BOOKMARK [1][-]{section.7}{Conclusions}{}% 22
